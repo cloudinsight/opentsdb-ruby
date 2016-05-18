@@ -36,5 +36,4 @@ require 'cloudinsight/opentsdb/version'
 require 'cloudinsight/opentsdb/client'
 require 'cloudinsight/opentsdb/query_parser'
 require 'cloudinsight/opentsdb/query_param'
-require 'cloudinsight/opentsdb/railtie' if defined?(::Rails)
 require 'forwardable'
