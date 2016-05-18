@@ -12,11 +12,11 @@ module CloudInsight
     end
 
     def start_time
-      @start_time > 0 ? @start_time : (end_time - 3_600_000) # 1 hour ago
+      @start_time > 0 ? to_ms(@start_time) : (end_time - 3_600_000) # 1 hour ago
     end
 
     def end_time
-      @end_time > 0 ? @end_time : Time.now.to_i
+      @end_time > 0 ? to_ms(@end_time) : to_ms(Time.now)
     end
 
     def to_json
@@ -38,6 +38,10 @@ module CloudInsight
     end
 
     private
+
+    def to_ms(time = Time.now)
+      (time.to_f * 1000).to_i
+    end
 
     def queries
       [{}.tap do |qh|

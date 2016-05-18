@@ -6,8 +6,8 @@ module CloudInsight
     class HttpClient
       def post(uri, body)
         send_http(uri) do |http|
-          req = Net::HTTP::Post.new(uri, headers)
           Opentsdb.logger.debug "Http post body: #{body}"
+          req = Net::HTTP::Post.new(uri, headers)
           req.body = body
           http.request(req)
         end

@@ -13,5 +13,4 @@ ratings:
   paths:
   - lib/**
 exclude_paths:
-- config/
 - test/
