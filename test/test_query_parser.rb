@@ -7,7 +7,7 @@ class TestQueryParser < Minitest::Test
 
   def test_parse
     q = 'avg:system.load.1'
-    query = CloudInsight::Opentsdb::QueryParser.parse(q)
+    query = Opentsdb::QueryParser.parse(q)
     assert_equal 'avg', query.aggregator
     assert_equal 'system.load.1', query.metric
     assert query.tags.empty?
@@ -15,7 +15,7 @@ class TestQueryParser < Minitest::Test
 
   def test_parse_with_tags
     q = 'sum:system.load.15{host=machine,k1=v1,host=test-env} by {}'
-    query = CloudInsight::Opentsdb::QueryParser.parse(q)
+    query = Opentsdb::QueryParser.parse(q)
     assert_equal 'sum', query.aggregator
     assert_equal 'system.load.15', query.metric
     assert_equal 'machine|test-env', query.tags['host']

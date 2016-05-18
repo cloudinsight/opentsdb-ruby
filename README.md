@@ -25,15 +25,12 @@ Or install it yourself as:
 ### Configure opentsdb
 
 ```ruby
-    #config/initializers/cloudinsight_opentsdb.rb
+    #config/initializers/opentsdb.rb
     
-    if defined?(CloudInsight)
-      CloudInsight::Opentsdb.configure do |config|
+      Opentsdb.configure do |config|
         config.host = 'localhost'  # opentsdb server host default: localhost
         config.port =  4242        # opentsdb server port default: 4242
       end 
-    end
-
 ```
 
 ### Usage
@@ -43,19 +40,19 @@ Or install it yourself as:
   # define simple query params
   params = { begin: Time.now.ago(1.hour), q: 'avg:system.load.1{host=*}' }
   # opensted
-  client = CloudInsight::Opentsdb::Client.new(params)
+  client = Opentsdb::Client.new(params)
   result = client.query # opentsdb json result
 
 
   # complicate query params
   params = { begin: Time.now.ago(1.hour), end: Time.now, q: 'avg:system.load.1{host=server1, host=server2, tagk=tagv}by{host}', interval: 360 }
-  client = CloudInsight::Opentsdb::Client.new(params)
+  client = Opentsdb::Client.new(params)
   result = client.query # opentsdb json result
   
 
   # reconfig opentsdb host port
   params = { host: '192.168.0.100', port: 8000, q: 'avg:system.load.1{host=*}' }
-  client = CloudInsight::Opentsdb::Client.new(params)
+  client = Opentsdb::Client.new(params)
   result = client.query # opentsdb json result
 ```
 

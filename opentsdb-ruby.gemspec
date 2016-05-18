@@ -2,11 +2,11 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'cloudinsight/opentsdb/version'
+require 'opentsdb/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'opentsdb-ruby'
-  spec.version       = CloudInsight::Opentsdb::VERSION
+  spec.version       = Opentsdb::VERSION
   spec.authors       = %w(lizhe luyingrui)
   spec.email         = ['lnz013@qq.com', 'luyingrui@oneapm.com']
 

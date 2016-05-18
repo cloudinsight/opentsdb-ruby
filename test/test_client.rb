@@ -5,14 +5,14 @@ class TestClient < Minitest::Test
     @res = mock('Net::HTTPResponse')
     body = read_test_json 'tsdb_res_200.json'
     @res.stubs(code: 200, body: body, class: Net::HTTPOK)
-    CloudInsight::Opentsdb::Client.any_instance.stubs(:post).returns(@res)
+    Opentsdb::Client.any_instance.stubs(:post).returns(@res)
 
     @params = { begin: Time.now, q: 'avg:system.load.1{host=*}', interval: 360 }
-    CloudInsight::Opentsdb.reset
+    Opentsdb.reset
   end
 
   def test_query
-    client = CloudInsight::Opentsdb::Client.new(@params)
+    client = Opentsdb::Client.new(@params)
     result = client.query
     assert_equal 1, result.size
     assert_equal 'localhost', client.host
@@ -21,7 +21,7 @@ class TestClient < Minitest::Test
 
   def test_parse_queries
     @params[:q] = 'sum:system.load.1{host=machine};sum:system.load.15{host=test-env}'
-    queries = CloudInsight::Opentsdb::Client.new(@params).parse_queries
+    queries = Opentsdb::Client.new(@params).parse_queries
     assert_equal 2, queries.size
     assert_equal 'sum', queries.last.aggregator
     assert_equal 'system.load.15', queries.last.metric
@@ -31,7 +31,7 @@ class TestClient < Minitest::Test
 
   def test_parse_quires_with_no_downsample
     @params.delete(:interval)
-    queries = CloudInsight::Opentsdb::Client.new(@params).parse_queries
+    queries = Opentsdb::Client.new(@params).parse_queries
     assert_equal 1, queries.size
     refute queries.last.downsample, 'downsample should be nil'
   end
