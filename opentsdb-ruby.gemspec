@@ -1,32 +1,35 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'opentsdb/version'
+
+require 'cloudinsight/opentsdb/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "opentsdb-ruby"
-  spec.version       = Opentsdb::VERSION
-  spec.authors       = ["lizhe"]
-  spec.email         = ["lnz013@qq.com"]
+  spec.name          = 'opentsdb-ruby'
+  spec.version       = CloudInsight::Opentsdb::VERSION
+  spec.authors       = %w(lizhe luyingrui)
+  spec.email         = ['lnz013@qq.com', 'luyingrui@oneapm.com']
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = 'Ruby client for OpenTSDB HTTP Query API.'
+  spec.homepage      = 'https://github.com/cloudinsight/opentsdb-ruby'
 
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
+    spec.metadata['allowed_push_host'] = 'https://rubygems.org'
   else
-    raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
+    raise 'RubyGems 2.0 or newer is required to protect against public gem pushes.'
   end
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
+  spec.files         = Dir['lib/**/*.rb', 'examples/**/*.rb', 'README.md']
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.require_paths = ['lib']
 
-  spec.add_development_dependency "bundler", "~> 1.12"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "minitest", "~> 5.0"
+  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'minitest', '~> 5.0'
+  spec.add_development_dependency 'minitest-reporters', '~> 1.1'
+  spec.add_development_dependency 'rubocop', '~> 0.40'
+  spec.add_development_dependency 'guard', '~> 2.13'
+  spec.add_development_dependency 'guard-minitest', '~> 2.4'
+  spec.add_development_dependency 'mocha', '~> 1.1'
+  spec.add_development_dependency 'pry', '~> 0.10'
+  spec.required_ruby_version = '>= 1.9.3'
 end
