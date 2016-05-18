@@ -1,6 +1,6 @@
 # opentsdb-ruby
 
-Ruby client for OpenTSDB HTTP Query API.
+Ruby client for OpenTSDB HTTP Query API. 
 
 [![Build Status](https://travis-ci.org/cloudinsight/opentsdb-ruby.png)](https://travis-ci.org/cloudinsight/opentsdb-ruby) [![Code Climate](https://codeclimate.com/github/cloudinsight/opentsdb-ruby/badges/gpa.svg)](https://codeclimate.com/github/cloudinsight/opentsdb-ruby) [![Test Coverage](https://codeclimate.com/github/cloudinsight/opentsdb-ruby/badges/coverage.svg)](https://codeclimate.com/github/cloudinsight/opentsdb-ruby/coverage)
 
