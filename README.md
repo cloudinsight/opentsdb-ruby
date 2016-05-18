@@ -8,7 +8,7 @@ Ruby client for OpenTSDB HTTP Query API.
 Add this line to your application's Gemfile:
 
 ```ruby
-  gem 'openstd-ruby', github: 'cloudinsight/opentsdb-ruby'
+  gem 'opentsdb-ruby'
 ```
 
 And then execute:
@@ -17,15 +17,15 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install openstd-ruby
+    $ gem install opentsdb-ruby
 
 
 ## Quick Start Guide
 
-### Configure openstdb
+### Configure opentsdb
 
 ```ruby
-    #config/initializers/cloudinsight_openstdb.rb
+    #config/initializers/cloudinsight_opentsdb.rb
     
     if defined?(CloudInsight)
       CloudInsight::Opentsdb.configure do |config|
@@ -40,20 +40,20 @@ Or install it yourself as:
 
 ```ruby
 
-   # define simple query params
+  # define simple query params
   params = { begin: Time.now.ago(1.hour), q: 'avg:system.load.1{host=*}' }
   # opensted
   client = CloudInsight::Opentsdb::Client.new(params)
   result = client.query # opentsdb json result
 
 
- # complicate query params
+  # complicate query params
   params = { begin: Time.now.ago(1.hour), end: Time.now, q: 'avg:system.load.1{host=server1, host=server2, tagk=tagv}by{host}', interval: 360 }
   client = CloudInsight::Opentsdb::Client.new(params)
   result = client.query # opentsdb json result
   
 
-# reconfig opentsdb host port
+  # reconfig opentsdb host port
   params = { host: '192.168.0.100', port: 8000, q: 'avg:system.load.1{host=*}' }
   client = CloudInsight::Opentsdb::Client.new(params)
   result = client.query # opentsdb json result
