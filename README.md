@@ -9,7 +9,7 @@ Ruby client for OpenTSDB HTTP Query API.
 Add this line to your application's Gemfile:
 
 ```ruby
-  gem 'opentsdb-ruby'
+  gem 'opentsdb-ruby', require 'opentsdb'
 ```
 
 And then execute:
@@ -27,11 +27,11 @@ Or install it yourself as:
 
 ```ruby
     #config/initializers/opentsdb.rb
-    
-      Opentsdb.configure do |config|
-        config.host = 'localhost'  # opentsdb server host default: localhost
-        config.port =  4242        # opentsdb server port default: 4242
-      end 
+    #require 'opentsdb'
+    Opentsdb.configure do |config|
+      config.host = 'localhost'  # opentsdb server host default: localhost
+      config.port =  4242        # opentsdb server port default: 4242
+    end 
 ```
 
 ### Usage

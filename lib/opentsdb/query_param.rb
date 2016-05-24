@@ -22,7 +22,7 @@ class QueryParam
     {}.tap do |h|
       h[:start]   = start_time
       h[:end]     = end_time
-      h[:queries] = queries
+      h[:queries] = [queries]
     end.to_json
   end
 
@@ -43,13 +43,13 @@ class QueryParam
   end
 
   def queries
-    [{}.tap do |qh|
+    {}.tap do |qh|
       qh[:aggregator] = aggregator
       qh[:rate]       = rate
       qh[:metric]     = metric
       qh[:tags]       = tags
       qh[:downsample] = downsample if downsample
-    end]
+    end
   end
 
   def aggregator_for
