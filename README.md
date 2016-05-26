@@ -40,7 +40,6 @@ Or install it yourself as:
 
   # define simple query params
   params = { begin: Time.now.ago(1.hour), q: 'avg:system.load.1{host=*}' }
-  # opensted
   client = Opentsdb::Client.new(params)
   result = client.query # opentsdb json result
   # => { status: 'ok', condition: #<Opentsdb::QueryParam: @metric="system.load.1",..., result: '[{"metric": "system.load.1", "tags": ... "dps":[...]}]}'
@@ -60,7 +59,7 @@ Or install it yourself as:
   #query exception
   client = Opentsdb::Client.new(q: 'avg:unknown_metric')
   result = client.query # opentsdb json result
-   # => { status: 'error', condition: #<Opentsdb::QueryParam: @metric="system.load.1",..., result: '{"error":{"code":400,"message":"No such name for 'metrics'...}}'
+  # => { status: 'error', condition: #<Opentsdb::QueryParam: @metric="system.load.1",..., result: '{"error":{"code":400,"message":"No such name for 'metrics'...}}'
 
 ```
 
