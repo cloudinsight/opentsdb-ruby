@@ -41,24 +41,24 @@ Or install it yourself as:
   # define simple query params
   params = { begin: Time.now.ago(1.hour), q: 'avg:system.load.1{host=*}' }
   client = Opentsdb::Client.new(params)
-  result = client.query # opentsdb json result
+  result = client.query
   # => { status: 'ok', condition: #<Opentsdb::QueryParam: @metric="system.load.1",..., result: '[{"metric": "system.load.1", "tags": ... "dps":[...]}]}'
 
   # complicate query params
   params = { begin: Time.now.ago(1.hour), end: Time.now, q: 'avg:system.load.1{host=server1, host=server2, tagk=tagv}by{host}', interval: 360 }
   client = Opentsdb::Client.new(params)
-  result = client.query # opentsdb json result
+  result = client.query
   # => { status: 'ok', condition: #<Opentsdb::QueryParam: @metric="system.load.1",..., result: '[{"metric": "system.load.1", "tags": ... "dps":[...]}]}'
 
   # reconfig opentsdb host and port
   params = { host: '192.168.0.100', port: 8000, q: 'avg:system.load.1{host=*}' }
   client = Opentsdb::Client.new(params)
-  result = client.query # opentsdb json result
+  result = client.query
   # => { status: 'ok', condition: #<Opentsdb::QueryParam: @metric="system.load.1",..., result: '[{"metric": "system.load.1", "tags": ... "dps":[...]}]}'
 
   #query exception
   client = Opentsdb::Client.new(q: 'avg:unknown_metric')
-  result = client.query # opentsdb json result
+  result = client.query
   # => { status: 'error', condition: #<Opentsdb::QueryParam: @metric="system.load.1",..., result: '{"error":{"code":400,"message":"No such name for 'metrics'...}}'
 
 ```
