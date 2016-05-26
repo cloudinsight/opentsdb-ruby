@@ -25,7 +25,7 @@ module Opentsdb
       time = Benchmark.realtime do
         res = yield(http)
       end
-      Opentsdb.logger.info "Response: #{res.code} consume: #{time} s"
+      Opentsdb.logger.info "Response Code: #{res.code} Consume: #{time} s"
       res
     rescue Timeout::Error, Errno::ECONNRESET, Net::HTTPBadResponse,
            Net::HTTPHeaderSyntaxError, Net::ProtocolError => e

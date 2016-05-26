@@ -6,24 +6,27 @@ module Opentsdb
 
     def_instance_delegators :@http, :post
 
-    attr_reader :host, :port, :query_options
+    attr_reader :host, :port
+    attr_accessor :query_commads
 
     def initialize(options = {})
       @host = options.delete(:host) || Opentsdb.host
       @port = options.delete(:port) || Opentsdb.port
       @http = HttpClient.new
-      @query_options = options
+      @query_commads = parse_queries options
     end
 
     def query
-      [].tap do |data|
-        parse_queries.each do |query_commad|
-          data << post(query_uri, query_commad.to_json)
+      [].tap do |results|
+        query_commads.each do |query_commad|
+          res = post(query_uri, query_commad.to_json)
+          status = res.code.to_i == 200 ? 'ok' : 'error'
+          results << { status: status, condition: query_commad, result: res.body }
         end
       end
     end
 
-    def parse_queries
+    def parse_queries(query_options = {})
       [].tap do |qs|
         query_options[:q].split(';').each do |q|
           query = QueryParser.parse(q)
