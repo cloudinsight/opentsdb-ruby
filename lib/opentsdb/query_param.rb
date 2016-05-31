@@ -11,6 +11,8 @@ module Opentsdb
       @tags         = options[:tags] || {}
       @rate_options = options[:rate_options]
       @group        = options[:group] || []
+      @start_time   = 0
+      @end_time     = 0
     end
 
     def start_time
@@ -45,7 +47,8 @@ module Opentsdb
     private
 
     def to_ms(time = Time.now)
-      (time.to_f * 1000).to_i
+      time = time.is_a?(Fixnum) ? time : time.to_i
+      time.to_s.ljust(13, '0').to_i # ms.to_size == 13
     end
 
     def queries

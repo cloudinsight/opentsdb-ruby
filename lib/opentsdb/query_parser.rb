@@ -8,15 +8,15 @@ module Opentsdb
         metric_query = {}
         metric_query[:aggregator] = parts[0]
         metric_query[:rate] = false
-        metic = parts[1]
+        metric = parts[1]
         if parts.size == 3
-          if metic.start_with?('rate')
+          if metric.start_with?('rate')
             metric_query[:rate] = true
-            metric_query[:rate_options] = parse_rate(metic) if temp.index('{')
+            metric_query[:rate_options] = parse_rate(metric) if metric.index('{')
           end
-          metic = parts[2]
+          metric = parts[2]
         end
-        QueryParam.new metric_query.merge(parse_metric(metic))
+        QueryParam.new metric_query.merge(parse_metric(metric))
       end
 
       private
