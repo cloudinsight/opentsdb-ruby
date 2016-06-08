@@ -2,11 +2,10 @@ require 'test_helper'
 
 class TestClient < Minitest::Test
   def setup
-    @res = mock('Net::HTTPResponse')
+    @res = mock('Faraday')
     @body = read_test_json 'tsdb_res_200.json'
-    @res.stubs(code: 200, body: @body, class: Net::HTTPOK)
+    @res.stubs(status: 200, body: @body)
     Opentsdb::Client.any_instance.stubs(:post).returns(@res)
-
     @params = { begin: Time.now, q: 'avg:system.load.1{host=*}', interval: 360 }
     Opentsdb.reset
   end

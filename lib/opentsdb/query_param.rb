@@ -48,7 +48,7 @@ module Opentsdb
 
     def to_ms(time = Time.now)
       time = time.is_a?(Fixnum) ? time : time.to_i
-      time.to_s.ljust(13, '0').to_i # ms.to_size == 13
+      time.to_s.ljust(13, '0').to_i # ms.to_size = 13
     end
 
     def queries

@@ -1,10 +1,9 @@
-require_relative 'http_client'
 module Opentsdb
   # ruby client for OpenTsdb HTTP API
   class Client
     extend Forwardable
 
-    def_instance_delegators :@http, :post
+    def_instance_delegators :@faraday, :post
 
     attr_reader :host, :port
     attr_accessor :query_commads
@@ -12,15 +11,15 @@ module Opentsdb
     def initialize(options = {})
       @host = options.delete(:host) || Opentsdb.host
       @port = options.delete(:port) || Opentsdb.port
-      @http = HttpClient.new
+      @faraday = Opentsdb::Faraday.new(query_url)
       @query_commads = parse_queries options
     end
 
     def query
       [].tap do |results|
         query_commads.each do |query_commad|
-          res = post(query_uri, query_commad.to_json)
-          status = res.code.to_i == 200 ? 'ok' : 'error'
+          res = post query_commad.to_json
+          status = res.status.to_i == 200 ? 'ok' : 'error'
           results << { status: status, condition: query_commad, result: res.body }
         end
       end
@@ -40,8 +39,8 @@ module Opentsdb
 
     private
 
-    def query_uri
-      URI("http://#{host}:#{port}/api/query")
+    def query_url
+      "http://#{host}:#{port}/api/query"
     end
   end
 end
