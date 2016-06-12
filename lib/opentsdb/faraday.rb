@@ -36,7 +36,7 @@ module Opentsdb
     def auto_detect_adapter
       if defined?(::Patron)
         :partron
-      elsif defined?(::Excon)
+      elsif defined?(::Excon) && defined?(::Excon::VERSION)
         :excon
       elsif defined?(::Typhoeus)
         :typhoeus
