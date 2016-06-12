@@ -28,22 +28,21 @@ module Opentsdb
         ::Faraday.new(url: url) do |faraday|
           faraday.request  :url_encoded              # form-encode POST params
           faraday.response :logger                   # log requests to STDOUT
-          faraday.adapter  auto_detect_adapter
+          faraday.adapter auto_detect_adapter
         end
       end
     end
 
     def auto_detect_adapter
-      case 
-      when defined?(::Patron)
+      if defined?(::Patron)
         :partron
-      when defined?(::Excon)
+      elsif defined?(::Excon)
         :excon
-      when defined?(::Typhoeus)
+      elsif defined?(::Typhoeus)
         :typhoeus
-      when defined?(::HTTPClient)
+      elsif defined?(::HTTPClient)
         :httpclient
-      when defined?(::Net::HTTP::Persistent)
+      elsif defined?(::Net::HTTP::Persistent)
         :net_http_persistent
       else
         ::Faraday.default_adapter
