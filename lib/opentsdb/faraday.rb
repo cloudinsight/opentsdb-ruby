@@ -26,8 +26,8 @@ module Opentsdb
     def connection
       @connection ||= begin
         ::Faraday.new(url: url) do |faraday|
-          faraday.request :url_encoded        # form-encode POST params
-          faraday.response :logger            # log requests to STDOUT
+          faraday.request  :url_encoded              # form-encode POST params
+          faraday.response :logger                   # log requests to STDOUT
           faraday.adapter auto_detect_adapter
         end
       end
