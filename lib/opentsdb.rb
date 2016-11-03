@@ -2,7 +2,7 @@
 module Opentsdb
   #:nodoc:
   class << self
-    attr_accessor :host, :port
+    attr_accessor :host, :port, :logger
 
     def configure
       yield self

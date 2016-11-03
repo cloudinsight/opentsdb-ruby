@@ -18,7 +18,9 @@ module Opentsdb
     def query
       [].tap do |results|
         query_commads.each do |query_commad|
+          Opentsdb.logger.debug "[OpenTSDB] query: #{query_commad.to_json}"
           res = post query_commad.to_json
+          Opentsdb.logger.debug "[OpenTSDB] result: #{res.body}"
           status = res.status.to_i == 200 ? 'ok' : 'error'
           results << { status: status, condition: query_commad, result: res.body }
         end
