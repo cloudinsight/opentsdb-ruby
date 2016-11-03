@@ -22,6 +22,16 @@ class TestQueryParser < Minitest::Test
     assert_equal 'machine|test-env', query.to_query_tags['host']
   end
 
+  def test_parse_with_excluding_tags
+    q = 'sum:system.load.15{host=machine,k1!=v1,host!=test-env} by {}'
+    query = Opentsdb::QueryParser.parse(q)
+    assert_equal 'sum', query.aggregator
+    assert_equal 'system.load.15', query.metric
+    assert_equal %w(machine), query.tags['host']
+    assert_equal %w(v1 test-env), query.excluding_tags.values.flatten
+    assert_equal 'machine', query.to_query_tags['host']
+  end
+
   def test_parse_with_any_value
     q = 'avg:system.disk.total{host=machine}by{device_name}'
     query = Opentsdb::QueryParser.parse(q)

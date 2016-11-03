@@ -27,7 +27,7 @@ module Opentsdb
         {}.tap do |h|
           h[:metric] = metric[0...start_index]
           end_index = metric.index('}')
-          h[:tags] = parse_tags metric[(start_index + 1)...end_index].strip
+          h[:tags], h[:excluding_tags] = parse_tags metric[(start_index + 1)...end_index].strip
           groups_str = metric[(end_index + 1)..-1]
           if groups_str.size > 5 # length of by{} is 4
             h[:group] = parse_groups groups_str
@@ -51,14 +51,22 @@ module Opentsdb
 
       def parse_tags(tags)
         return if tags.nil?
-        Hash.new { |h, k| h[k] = [] }.tap do |rtags|
-          split_for(tags, ',').each do |tag|
-            tagk, tagv = split_for(tag, '=')
-            next if tagk.nil? || tagv.nil?
-            rtags[tagk] ||= []
-            rtags[tagk].concat tagv.split('|').uniq
+        over_tags = Hash.new { |h, k| h[k] = [] }
+        excluding_tags = Hash.new { |h, k| h[k] = [] }
+        split_for(tags, ',').each do |tag|
+          if tag =~ /!=/
+            append_tags(excluding_tags, tag, '!=')
+          else
+            append_tags(over_tags, tag)
           end
         end
+        [over_tags, excluding_tags]
+      end
+
+      def append_tags(tags, tag, token = '=')
+        tagk, tagv = tag.split(token)
+        return if tagk.nil? || tagv.nil?
+        tags[tagk].concat tagv.split('|').uniq
       end
 
       def parse_groups(groups_str)

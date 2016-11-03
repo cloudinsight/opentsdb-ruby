@@ -2,17 +2,19 @@ module Opentsdb
   # :nodoc:
   class QueryParam
     attr_accessor :aggregator, :rate, :metric, :tags, :interval, :downsample, :rate_options, :group
+    attr_accessor :excluding_tags
     attr_accessor :start_time, :end_time
 
     def initialize(options = {})
-      @aggregator   = options[:aggregator]
-      @rate         = options[:rate] || false
-      @metric       = options[:metric]
-      @tags         = options[:tags] || {}
-      @rate_options = options[:rate_options]
-      @group        = options[:group] || []
-      @start_time   = 0
-      @end_time     = 0
+      @aggregator     = options[:aggregator]
+      @rate           = options[:rate] || false
+      @metric         = options[:metric]
+      @tags           = options[:tags] || {}
+      @excluding_tags = options[:excluding_tags] || {}
+      @rate_options   = options[:rate_options]
+      @group          = options[:group] || []
+      @start_time     = 0
+      @end_time       = 0
     end
 
     def start_time

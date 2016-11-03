@@ -14,6 +14,7 @@ module Opentsdb
         req.headers         = headers
         req.body            = body
         req.options.timeout = 5
+        req.options.open_timeout = 5
       end
     end
 
