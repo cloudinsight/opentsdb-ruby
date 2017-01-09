@@ -5,14 +5,15 @@ module Opentsdb
 
     def_instance_delegators :@faraday, :post
 
-    attr_reader :host, :port
+    attr_reader :host, :port, :query_options
     attr_accessor :query_commads
 
     def initialize(options = {})
       @host = options.delete(:host) || Opentsdb.host
       @port = options.delete(:port) || Opentsdb.port
-      @faraday = Opentsdb::Faraday.new(query_url)
-      @query_commads = parse_queries options
+      @query_options = options.merge(Opentsdb.options)
+      @faraday = Opentsdb::Faraday.new(query_url, @query_options)
+      @query_commads = parse_queries
     end
 
     def query
@@ -29,7 +30,7 @@ module Opentsdb
       end
     end
 
-    def parse_queries(query_options = {})
+    def parse_queries
       [].tap do |qs|
         query_options[:q].split(';').each do |q|
           query = QueryParser.parse(q)

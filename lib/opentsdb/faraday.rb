@@ -2,7 +2,8 @@ require 'faraday'
 module Opentsdb
   # :nodoc:
   class Faraday
-    attr_reader :url
+    attr_reader :url, :options
+    DEFAULT_TIMEOUT = 5
 
     def initialize(url, options = {})
       @url = url
@@ -13,8 +14,8 @@ module Opentsdb
       connection.post do |req|
         req.headers         = headers
         req.body            = body
-        req.options.timeout = 5
-        req.options.open_timeout = 5
+        req.options.timeout = options[:timeout] || DEFAULT_TIMEOUT
+        req.options.open_timeout = options[:open_timeout] || DEFAULT_TIMEOUT
       end
     end
 

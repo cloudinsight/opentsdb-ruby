@@ -2,7 +2,7 @@
 module Opentsdb
   #:nodoc:
   class << self
-    attr_accessor :host, :port, :logger
+    attr_accessor :host, :port, :logger, :options
 
     def configure
       yield self
@@ -14,6 +14,10 @@ module Opentsdb
 
     def port
       @port || 4242
+    end
+
+    def options
+      @options || {}
     end
 
     def reset
